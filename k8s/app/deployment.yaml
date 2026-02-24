@@ -15,10 +15,10 @@ spec:
       initContainers:
         - name: copy-certs
           image: busybox
-          command: ["sh", "-c", "cp /tmp-certs/* /certs/"]
+          command: ["sh", "-c", "cp /tmp-certs/* /cert/"]
           volumeMounts:
             - name: certs-pvc
-              mountPath: /certs
+              mountPath: /cert
             - name: certs-secret
               mountPath: /tmp-certs
       containers:
@@ -29,7 +29,7 @@ spec:
             - containerPort: 80
           volumeMounts:
             - name: certs-pvc
-              mountPath: /certs
+              mountPath: /cert
       volumes:
         - name: certs-pvc
           persistentVolumeClaim:
