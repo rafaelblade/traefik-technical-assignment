@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: foobar-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: foobar-api
+  template:
+    metadata:
+      labels:
+        app: foobar-api
+    spec:
+      initContainers:
+        - name: copy-certs
+          image: busybox
+          command: ["sh", "-c", "cp /tmp-certs/* /certs/"]
+          volumeMounts:
+            - name: certs-pvc
+              mountPath: /certs
+            - name: certs-secret
+              mountPath: /tmp-certs
+      containers:
+        - name: foobar-api
+          image: foobar-api:local
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: certs-pvc
+              mountPath: /certs
+      volumes:
+        - name: certs-pvc
+          persistentVolumeClaim:
+            claimName: foobar-api-certs
+        - name: certs-secret
+          secret:
+            secretName: foobar-api-tls
