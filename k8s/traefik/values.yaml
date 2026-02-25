@@ -1,0 +1,43 @@
+ports:
+  web:
+    port: 8000
+    nodePort: 30000
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+          permanent: true
+
+  websecure:
+    port: 8443
+    nodePort: 30001
+
+additionalArguments:
+  - "--entrypoints.web.address=:8000"
+  - "--entrypoints.websecure.address=:8443"
+  - "--entrypoints.websecure.transport.respondingTimeouts.readTimeout=0"
+
+api:
+  dashboard: true
+  insecure: false
+
+ingressClass:
+  enabled: true
+  isDefaultClass: true
+
+providers:
+  kubernetesIngress:
+    enabled: true
+  kubernetesGateway:
+    enabled: false
+
+logs:
+  general:
+    level: INFO
+  access:
+    enabled: true
+
+metrics:
+  prometheus:
+    enabled: true
