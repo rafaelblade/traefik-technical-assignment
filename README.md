@@ -20,34 +20,6 @@ The deployment architecture:
 - `kubectl` installed and configured  
 - `helm` installed  
 
-## Repository Structure
-
-.
-├── bootstrap.sh # Script to bootstrap the Kubernetes environment
-├── docs # Additional documentation (architecture, diagrams, notes)
-├── foobar-api # Application source code and Dockerfile
-│ ├── app.go
-│ ├── Dockerfile
-│ ├── go.mod
-│ ├── go.sum
-│ ├── LICENSE
-│ ├── Makefile
-│ └── README.md
-├── k8s # Kubernetes manifests and certificates
-│ ├── app
-│ │ ├── deployment.yaml
-│ │ ├── ingressroute.yaml
-│ │ ├── pvc.yaml
-│ │ └── service.yaml
-│ ├── certs
-│ │ ├── cert.pem
-│ │ └── key.pem
-│ └── traefik
-│ ├── dashboard-ingress.yaml
-│ └── values.yaml
-├── kind-config.yaml # Configuration file for kind cluster
-└── README.md # This README
-
 ## Deployment
 
 1. Make the bootstrap script executable:
